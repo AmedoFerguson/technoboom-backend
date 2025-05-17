@@ -1,4 +1,6 @@
 from pathlib import Path
+import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -88,11 +90,11 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'railway',  # Имя вашей базы данных
-        'USER': 'root',  # Имя пользователя
-        'PASSWORD': 'hPkKqckQbNLadLvYvQvskwLwIGESEmVx',  # Пароль
-        'HOST': 'mysql.railway.internal',  # Хост базы данных
-        'PORT': '3306',  # Порт
+        'NAME': os.getenv('MYSQL_DATABASE'),  # Имя базы данных
+        'USER': os.getenv('MYSQL_USER'),      # Имя пользователя
+        'PASSWORD': os.getenv('MYSQL_PASSWORD'),  # Пароль
+        'HOST': os.getenv('MYSQL_HOST'),      # Хост
+        'PORT': os.getenv('MYSQL_PORT'),      # Порт
     }
 }
 

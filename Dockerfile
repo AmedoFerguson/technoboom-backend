@@ -1,13 +1,17 @@
 FROM python:3.9-slim
 
-# Устанавливаем необходимые зависимости
-RUN apt-get update && apt-get install -y \
-    pkg-config \
-    libmariadb-dev \
-    && rm -rf /var/lib/apt/lists/*
+# Обновление и установка необходимых пакетов
+RUN apt-get update && \
+    apt-get install -y libmysqlclient-dev build-essential && \
+    rm -rf /var/lib/apt/lists/*
 
-# Устанавливаем зависимости Python
-COPY requirements.txt /app/
-RUN pip install --no-cache-dir -r /app/requirements.txt
+# Установка зависимостей Python
+COPY requirements.txt /app/requirements.txt
+WORKDIR /app
+RUN pip install -r requirements.txt
 
-# Оставшиеся инструкции...
+# Копирование файлов проекта
+COPY . /app
+
+# Запуск сервера Django или любой другой команды
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
